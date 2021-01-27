@@ -24,22 +24,6 @@
     <div id="results"></div>
   </main>
   <script src="examples.js"></script>
-  <script>
-    let example = 'simple_js_blocking'
-
-    function selectExample(e) {
-      name = e.target.id
-      if ('cleanup' in examples[example]) examples[example].cleanup()
-      if ('setup' in examples[name]) examples[name].setup()
-      document.getElementById('main-example').innerText = examples[name].execute.toString()
-      document.querySelector('h1').innerText = examples[name].title
-      document.querySelectorAll('nav li').forEach(li => {
-        li.classList.remove('active')
-      })
-      document.querySelector(`li#${name}`).classList.add('active')
-      example = name
-    }
-    selectExample({target: {id: example}})
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>
