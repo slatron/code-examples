@@ -28,7 +28,7 @@ const examples = {
     title: 'Simple JS Worker',
     setup: () => {},
     execute: () => {
-      const worker = new Worker('simple_worker.js');
+      const worker = new Worker('./simple_worker.js');
       worker.postMessage('Go!');
 
       let pElem = document.createElement('p');
@@ -36,9 +36,8 @@ const examples = {
       document.getElementById('results').appendChild(pElem);
 
       worker.onmessage = function(e) {
-        console.log(e.data);
         let pElem = document.createElement('p');
-        pElem.textContent = 'This is a newly-added paragraph.';
+        pElem.textContent = `Worker Returned Date:${e.data}`;
         document.getElementById('results').appendChild(pElem);
       }
     },
@@ -117,7 +116,7 @@ const examples = {
       document.getElementById('drawing').remove()
       document.getElementById('alertie').remove()
       document.getElementById('clearBtn').remove()
-      document.getElementById('times').remove()
+      document.getElementById('timesValue').remove()
       document.getElementById('timesValuelbl').remove()
       document.querySelector('#results h2').remove()
     }
