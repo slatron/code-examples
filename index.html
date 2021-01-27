@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async Samples</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <nav>
+      <ul>
+        <li id="simple_js_blocking" onclick="selectExample(event)">Basic JS Blocking</li>
+        <li id="simple_browser_blocking" onclick="selectExample(event)">SVG JS Blocking</li>
+      </ul>
+    </nav>
+    <section>
+      <h1></h1>
+      <code>
+        <pre id="main-example"></pre>
+      </code>
+      <button onclick="examples[example].execute()">Run Example</button>
+    </section>
+    <div id="results"></div>
+  </main>
+  <script src="examples.js"></script>
+  <script>
+    let example = 'simple_js_blocking'
+
+    function selectExample(e) {
+      name = e.target.id
+      if ('cleanup' in examples[example]) examples[example].cleanup()
+      if ('setup' in examples[name]) examples[name].setup()
+      document.getElementById('main-example').innerText = examples[name].execute.toString()
+      document.querySelector('h1').innerText = examples[name].title
+      document.querySelectorAll('nav li').forEach(li => {
+        li.classList.remove('active')
+      })
+      document.querySelector(`li#${name}`).classList.add('active')
+      example = name
+    }
+    selectExample({target: {id: example}})
+  </script>
+</body>
+</html>
