@@ -1,10 +1,15 @@
+const cleanupExample = () => {
+  document.getElementById('results').innerHTML = ''
+  document.getElementById('ui').innerHTML = ''
+}
+
 const examples = {
   example_example: {
     title: 'Title Here',
     setup: () => {},
     execute: () => {},
     cleanup: () => {
-      // document.getElementById('results').innerHTML = ''
+      cleanupExample()
     }
   },
   simple_js_blocking: {
@@ -21,7 +26,7 @@ const examples = {
       document.getElementById('results').appendChild(finishedText);
     },
     cleanup: () => {
-      document.getElementById('results').innerHTML = ''
+      cleanupExample()
     }
   },
   simple_js_worker: {
@@ -42,7 +47,7 @@ const examples = {
       }
     },
     cleanup: () => {
-      document.getElementById('results').innerHTML = ''
+      cleanupExample()
     }
   },
   simple_browser_blocking: {
@@ -63,19 +68,19 @@ const examples = {
       timesInput.value = 100
       timesInput.min = 1
       timesInput.max = 100000
-      document.querySelector('section').appendChild(timesInput)
+      document.getElementById('ui').appendChild(timesInput)
 
       let lElem = document.createElement('label');
       lElem.id = 'timesValuelbl'
       lElem.textContent = 'times';
       lElem.setAttribute('for', 'timesValue');
-      document.querySelector('section').appendChild(lElem);
+      document.getElementById('ui').appendChild(lElem);
 
       const alertBtn = document.createElement('button');
       alertBtn.id = 'alertie'
       alertBtn.innerText = 'alert'
       alertBtn.onclick = () => alert('click!')
-      document.querySelector('section').appendChild(alertBtn)
+      document.getElementById('ui').appendChild(alertBtn)
 
       const clearBtn = document.createElement('button');
       clearBtn.id = 'clearBtn'
@@ -86,7 +91,7 @@ const examples = {
         ctx.fillStyle = 'pink';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
-      document.querySelector('section').appendChild(clearBtn)
+      document.getElementById('ui').appendChild(clearBtn)
     },
     execute: () => {
       let times = parseInt(document.getElementById('timesValue').value)
@@ -113,12 +118,7 @@ const examples = {
       expensiveOperation()
     },
     cleanup: () => {
-      document.getElementById('drawing').remove()
-      document.getElementById('alertie').remove()
-      document.getElementById('clearBtn').remove()
-      document.getElementById('timesValue').remove()
-      document.getElementById('timesValuelbl').remove()
-      document.querySelector('#results h2').remove()
+      cleanupExample()
     }
   }
 }

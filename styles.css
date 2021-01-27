@@ -72,3 +72,7 @@ code {
   max-height: 80%;
   overflow: auto;
 }
+
+#run-example {
+  float: right;
+}
