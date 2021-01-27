@@ -23,3 +23,7 @@ Additionally, it should call selectExample(event) on click events
 ```javascript
 <li id="simple_js_blocking" onclick="selectExample(event)">Basic JS Blocking</li>
 ```
+
+#### Initialization
+
+To set the initial active example, set the example variable at the top of `main.js` to the initial `examples.js` key
