@@ -30,7 +30,7 @@ nav {
 }
 
 section {
-  flex: 2 0 auto;
+  flex-grow: 1;
   padding: 1em;
 }
 
@@ -60,19 +60,44 @@ nav li.active {
   background-color: #242a4e;
 }
 
-section code {
-  max-width: 800px;
+section code { padding: 0.5em }
+
+section code pre {
+  max-width: 700px;
+  overflow: auto;
 }
 
 button {
   margin: 1em;
 }
 
-code {
-  max-height: 80%;
-  overflow: auto;
-}
-
+#alert-msg,
 #run-example {
   float: right;
+}
+
+header {
+  display: flex;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+h1 {
+  margin: 0;
+}
+
+.arrow {
+  width: 20px;
+  color: #ffffff;
+  flex: 0 0 20px;
+  margin-right: 10px;
+  transform: rotate(90deg);
+}
+
+.arrow.active {
+  transform: rotate(180deg);
+}
+
+.hidden {
+  display: none;
 }

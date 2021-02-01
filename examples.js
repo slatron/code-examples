@@ -1,16 +1,8 @@
-const cleanupExample = () => {
-  document.getElementById('results').innerHTML = ''
-  document.getElementById('ui').innerHTML = ''
-}
-
 const examples = {
   example_example: {
     title: 'Title Here',
     setup: () => {},
-    execute: () => {},
-    cleanup: () => {
-      cleanupExample()
-    }
+    execute: () => {}
   },
   simple_js_blocking: {
     title: 'Simple JS Blocking',
@@ -24,9 +16,6 @@ const examples = {
       finishedText.id = 'finishedText'
       finishedText.innerText = 'This line was Blocked by new Date loop'
       document.getElementById('results').appendChild(finishedText);
-    },
-    cleanup: () => {
-      cleanupExample()
     }
   },
   simple_js_worker: {
@@ -45,9 +34,17 @@ const examples = {
         pElem.textContent = `Worker Returned Date:${e.data}`;
         document.getElementById('results').appendChild(pElem);
       }
-    },
-    cleanup: () => {
-      cleanupExample()
+
+      // simple_worker.js:
+      // onmessage = function() {
+      //   let myDate;
+      //   for(let i = 0; i < 10000000; i++) {
+      //     let date = new Date();
+      //     myDate = date
+      //   }
+      //   postMessage(myDate);
+      // }
+
     }
   },
   simple_browser_blocking: {
@@ -75,12 +72,6 @@ const examples = {
       lElem.textContent = 'times';
       lElem.setAttribute('for', 'timesValue');
       document.getElementById('ui').appendChild(lElem);
-
-      const alertBtn = document.createElement('button');
-      alertBtn.id = 'alertie'
-      alertBtn.innerText = 'alert'
-      alertBtn.onclick = () => alert('click!')
-      document.getElementById('ui').appendChild(alertBtn)
 
       const clearBtn = document.createElement('button');
       clearBtn.id = 'clearBtn'
@@ -116,9 +107,6 @@ const examples = {
         }
       }
       expensiveOperation()
-    },
-    cleanup: () => {
-      cleanupExample()
     }
   }
 }

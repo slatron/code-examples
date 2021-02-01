@@ -4,6 +4,8 @@ Created this as a quick way to display and execute javascript code examples. Als
 
 You can view the app by cloning this repo and opening `index.html` in a browser
 
+Some examples that call external files require a local server to run
+
 #### Examples
 
 Add code example objects to `examples.js`
