@@ -6,50 +6,63 @@ const results = {
   }
 }
 
+const getValue = (elemID) => {
+  return parseInt(document.getElementById(elemID).value)
+} 
+
+const degToRad = (degrees) => {
+  return degrees * Math.PI / 180;
+}
+const random = (min,max) => {
+  var num = Math.floor(Math.random()*(max-min)) + min;
+  return num;
+}
+
 const examples = {
   example_example: {
     title: 'Title Here',
     setup: () => {},
     execute: () => {}
   },
+
   simple_js_blocking: {
     title: 'Simple JS Blocking',
     execute: () => {
+      
       let myDate;
+
       for (let i = 0; i < 10000000; i++) {
         let date = new Date();
         myDate = date
       }
-      const finishedText = document.createElement('p')
-      finishedText.id = 'finishedText'
-      finishedText.innerText = 'This line was Blocked by new Date loop'
-      document.getElementById('results').appendChild(finishedText);
+
+      results.log('This line was Blocked by new Date loop')
     }
   },
   simple_js_worker: {
     title: 'Simple JS Worker',
     setup: () => {},
     execute: () => {
-      const worker = new Worker('./simple_worker.js');
+
+      const worker = new Worker('./simple_worker.js')
       worker.postMessage('Go!');
 
-      let pElem = document.createElement('p');
-      pElem.textContent = 'This is a newly-added paragraph.';
-      document.getElementById('results').appendChild(pElem);
+      results.log('This text is from the main execution thread')
 
       worker.onmessage = function(e) {
-        let pElem = document.createElement('p');
-        pElem.textContent = `Worker Returned Date:${e.data}`;
-        document.getElementById('results').appendChild(pElem);
+        results.log(`Worker Returned Date:${e.data}`)
       }
 
-      // simple_worker.js:
+      // simple_worker.js contents:
+      //
       // onmessage = function() {
       //   let myDate;
+      //
       //   for(let i = 0; i < 10000000; i++) {
       //     let date = new Date();
       //     myDate = date
       //   }
+      //
       //   postMessage(myDate);
       // }
 
@@ -58,7 +71,7 @@ const examples = {
   simple_browser_blocking: {
     title: 'SVG JS Blocking',
     setup: () => {
-      const canvas = document.createElement('canvas');
+      const canvas = document.createElement('canvas')
       canvas.width = 300;
       canvas.height = 300;
       canvas.id = 'drawing'
@@ -93,26 +106,22 @@ const examples = {
       document.getElementById('ui').appendChild(clearBtn)
     },
     execute: () => {
-      let times = parseInt(document.getElementById('timesValue').value)
-      if (times > 100000) times = 100000
-      const canvas = document.getElementById('drawing');
-      let ctx = canvas.getContext('2d');
 
-      function degToRad(degrees) {
-        return degrees * Math.PI / 180;
-      }
-      function random(min,max) {
-        var num = Math.floor(Math.random()*(max-min)) + min;
-        return num;
-      }
+      let times = getValue('timesValue')
+      if (times > 100000) times = 100000
+
+      const canvas = document.getElementById('drawing')
+      let ctx = canvas.getContext('2d')
+
       function expensiveOperation() {
         for(let i = 0; i < times; i++) {
-          ctx.fillStyle = 'rgba(0,0,255, 0.2)';
-          ctx.beginPath();
-          ctx.arc(random(0, canvas.width), random(0, canvas.height), 10, degToRad(0), degToRad(360), false);
+          ctx.fillStyle = 'rgba(0,0,255, 0.2)'
+          ctx.beginPath()
+          ctx.arc(random(0, canvas.width), random(0, canvas.height), 10, degToRad(0), degToRad(360), false)
           ctx.fill()
         }
       }
+
       expensiveOperation()
     }
   },
@@ -120,22 +129,30 @@ const examples = {
     title: 'Event Loop One',
     setup: () => {},
     execute: () => {
+
       results.log('First')
+
       setTimeout(function () {
         results.log('Second')
       }, 1000)
+
       results.log('Third')
+
     }
   },
   event_loop_example_two: {
     title: 'Event Loop Two',
     setup: () => {},
     execute: () => {
+
       results.log('First')
+
       setTimeout(function () {
         results.log('Second')
       }, 0)
+
       results.log('Third')
+
     }
   }
 }
