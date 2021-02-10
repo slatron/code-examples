@@ -1,4 +1,4 @@
-let example = 'simple_js_blocking'
+let example = window.location.search.substring(1).split('=')[1] || 'simple_js_blocking'
 
 const cleanupExample = () => {
   document.getElementById('results').innerHTML = ''

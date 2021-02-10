@@ -1,3 +1,11 @@
+const results = {
+  log(text) {
+    let elem = document.createElement('p');
+    elem.textContent = text;
+    document.getElementById('results').appendChild(elem);
+  }
+}
+
 const examples = {
   example_example: {
     title: 'Title Here',
@@ -99,7 +107,6 @@ const examples = {
       }
       function expensiveOperation() {
         for(let i = 0; i < times; i++) {
-          console.log(i)
           ctx.fillStyle = 'rgba(0,0,255, 0.2)';
           ctx.beginPath();
           ctx.arc(random(0, canvas.width), random(0, canvas.height), 10, degToRad(0), degToRad(360), false);
@@ -107,6 +114,28 @@ const examples = {
         }
       }
       expensiveOperation()
+    }
+  },
+  event_loop_example_one: {
+    title: 'Event Loop One',
+    setup: () => {},
+    execute: () => {
+      results.log('First')
+      setTimeout(function () {
+        results.log('Second')
+      }, 1000)
+      results.log('Third')
+    }
+  },
+  event_loop_example_two: {
+    title: 'Event Loop Two',
+    setup: () => {},
+    execute: () => {
+      results.log('First')
+      setTimeout(function () {
+        results.log('Second')
+      }, 0)
+      results.log('Third')
     }
   }
 }
