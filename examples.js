@@ -154,5 +154,50 @@ const examples = {
       results.log('Third')
 
     }
+  },
+
+  callback_example: {
+    title: 'Using Callbacks (wsg XMLHttpRequest)',
+    setup: () => {},
+    execute: () => {
+      // User navigates to /user/1
+      const userID = 1
+      let user, albums, posts, comments
+
+      const requestObj = new XMLHttpRequest()  
+      requestObj.open("GET", getUser(userID))
+      requestObj.onreadystatechange = () => {
+        if (requestObj.readyState === 4) {
+          user = JSON.parse(requestObj.response)
+
+          requestObj.open("GET", getUserAlbums(userID))
+          requestObj.onreadystatechange = () => {
+            if (requestObj.readyState === 4) {
+              albums = JSON.parse(requestObj.response)
+
+              requestObj.open("GET", getUserPosts(userID))
+              requestObj.onreadystatechange = () => {
+                if (requestObj.readyState === 4) {
+                  posts = JSON.parse(requestObj.response)
+                  const postID = posts[0].id
+
+                  requestObj.open("GET",  getPostComments(postID))
+                  requestObj.onreadystatechange = () => {
+                    if (requestObj.readyState === 4) {
+                      comments = JSON.parse(requestObj.response)
+                      renderPage(user, albums, posts, comments)
+                    }
+                  }
+                  requestObj.send(null)
+                }
+              }
+              requestObj.send(null)
+            }
+          }
+          requestObj.send(null)
+        }
+      }
+      requestObj.send(null)
+    }   
   }
 }

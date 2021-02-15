@@ -71,9 +71,8 @@ button {
   margin: 1em;
 }
 
-#alert-msg,
-#run-example {
-  float: right;
+.button-area{
+  text-align: right;
 }
 
 header {

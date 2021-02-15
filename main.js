@@ -5,6 +5,24 @@ const cleanupExample = () => {
   document.getElementById('ui').innerHTML = ''
 }
 
+function renderPage(user, albums, posts, comments) {
+  results.log(` ******************** `)
+  results.log(` ** ${user.name}`)
+  results.log(` ** ${user.email}`)
+  results.log(` ******************** `)
+
+  results.log(' ** Latest Post:')
+  results.log(posts[0].title)
+
+  results.log(' ** Latest Post Comment')
+  results.log(comments[0].body)
+
+  results.log(' ** Albums:')
+  results.log(`• ${albums[0].title}`)
+  results.log(`• ${albums[1].title}`)
+  results.log(`• ${albums[2].title}`)
+}
+
 function selectExample(e) {
   const name = e.target.id
   cleanupExample()
