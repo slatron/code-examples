@@ -45,7 +45,7 @@ const examples = {
     execute: () => {
 
       const worker = new Worker('./simple_worker.js')
-      worker.postMessage('Go!');
+      worker.postMessage('Begin Working')
 
       results.log('This text is from the main execution thread')
 
@@ -164,25 +164,30 @@ const examples = {
       const userID = 1
       let user, albums, posts, comments
 
-      const requestObj = new XMLHttpRequest()  
+      const requestObj = new XMLHttpRequest()
+
       requestObj.open("GET", getUser(userID))
       requestObj.onreadystatechange = () => {
+
         if (requestObj.readyState === 4) {
           user = JSON.parse(requestObj.response)
 
           requestObj.open("GET", getUserAlbums(userID))
           requestObj.onreadystatechange = () => {
+
             if (requestObj.readyState === 4) {
               albums = JSON.parse(requestObj.response)
 
               requestObj.open("GET", getUserPosts(userID))
               requestObj.onreadystatechange = () => {
+
                 if (requestObj.readyState === 4) {
                   posts = JSON.parse(requestObj.response)
                   const postID = posts[0].id
 
                   requestObj.open("GET",  getPostComments(postID))
                   requestObj.onreadystatechange = () => {
+                    
                     if (requestObj.readyState === 4) {
                       comments = JSON.parse(requestObj.response)
                       renderPage(user, albums, posts, comments)
@@ -199,5 +204,110 @@ const examples = {
       }
       requestObj.send(null)
     }   
+  },
+
+  promise_example: {
+    title: 'Using Promises',
+    setup: () => {},
+    execute: () => {
+      // User navigates to /user/1
+      const userID = 1
+      let user, albums, post, comments
+
+      get.user(userID)
+         .then(userResponse => { user = userResponse })
+         .then(() => { get.userAlbums(userID)
+           .then(albumsResponse => albums = albumsResponse)
+         })
+         .then(() => { get.userFirstPost(userID)
+           .then(postReponse => post = postReponse)
+           .then(() => { get.postComments(post.id)
+             .then(commentResponse => comments = commentResponse)
+             .then(() => renderPage(user, albums, [post], comments))
+           })
+         })
+         .catch(err => console.warn(err))
+    }    
+  },
+
+  promise_all_example: {
+    title: 'Using Promise.all',
+    setup: () => {},
+    execute: () => {
+      // User navigates to /user/1
+      const userID = 1
+      let comments
+
+      Promise.all([
+        get.user(userID),
+        get.userAlbums(userID),
+        get.userFirstPost(userID)
+      ])
+      .then(([userResponse, albumsResponse, postReponse]) => {
+        const user = userResponse
+        const albums = albumsResponse
+        const post = postReponse
+        get.postComments(post.id)
+           .then(commentResponse => comments = commentResponse)
+           .then(() => renderPage(user, albums, [post], comments))
+      })
+    }    
+  },
+
+  promise_priority: {
+    title: 'Priority Queue',
+    execute: () => {
+
+      results.log('First')
+
+      setTimeout(function () {
+        results.log('Second')
+      }, 0)
+
+      new Promise(function (res) {
+        res('Third')
+      }).then(results.log)
+
+      results.log('Fourth')
+
+    }
+  },
+
+  async_await_example: {
+    title: 'Using async/await',
+    setup: () => {},
+    execute: async () => {
+
+      // User navigates to /user/1
+      const userID = 1
+
+      const user   = await get.user(userID)
+      const albums = await get.userAlbums(userID)
+      const post   = await get.userFirstPost(userID)
+
+      const comments = await get.postComments(post.id)
+
+      renderPage(user, albums, [post], comments)
+    }    
+  },
+
+  async_await_promise_all: {
+    title: 'Combine Async/await + Promise.all',
+    setup: () => {},
+    execute: async () => {
+
+      // User navigates to /user/1
+      const userID = 1
+      const [user, albums, post] = await Promise.all([
+        get.user(userID),
+        get.userAlbums(userID),
+        get.userFirstPost(userID)
+      ])
+    
+      const comments = await get.postComments(post.id)
+    
+      renderPage(user, albums, [post], comments)
+    }
+    
   }
 }

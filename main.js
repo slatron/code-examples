@@ -6,9 +6,8 @@ const cleanupExample = () => {
 }
 
 function renderPage(user, albums, posts, comments) {
-  results.log(` ******************** `)
-  results.log(` ** ${user.name}`)
-  results.log(` ** ${user.email}`)
+  results.log(` ${user.name}`)
+  results.log(` ${user.email}`)
   results.log(` ******************** `)
 
   results.log(' ** Latest Post:')
@@ -17,7 +16,7 @@ function renderPage(user, albums, posts, comments) {
   results.log(' ** Latest Post Comment')
   results.log(comments[0].body)
 
-  results.log(' ** Albums:')
+  results.log(' ** Latest 3 Albums:')
   results.log(`• ${albums[0].title}`)
   results.log(`• ${albums[1].title}`)
   results.log(`• ${albums[2].title}`)

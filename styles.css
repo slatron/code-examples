@@ -41,6 +41,10 @@ section {
   color: #000000;
 }
 
+nav {
+  overflow-y: auto; 
+}
+
 nav ul {
   list-style-type: none;
   margin: 0;

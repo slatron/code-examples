@@ -1,19 +1,19 @@
 const get = {
   user (userId) {
-    fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+    return fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
       .then(response => response.json())
   },
   userAlbums (userId) {
-    fetch(`https://jsonplaceholder.typicode.com/albums/?userId=${userId}`)
+    return fetch(`https://jsonplaceholder.typicode.com/albums/?userId=${userId}`)
       .then(response => response.json())
   },
   userFirstPost (userId) {
-    fetch(`https://jsonplaceholder.typicode.com/posts/?userId=${userId}`)
+    return fetch(`https://jsonplaceholder.typicode.com/posts/?userId=${userId}`)
       .then(response => response.json())
       .then(json => json[0])
   },
   postComments (postId) {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
+    return fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
       .then(response => response.json())
   }
 }
