@@ -2,7 +2,9 @@
 
 Created this as a quick way to display and execute javascript code examples. Also as a way to make a quick framework-less "app" demo.
 
-You can view the app by cloning this repo and opening `index.html` in a browser
+You can view the app by cloning this repo and opening `index.html` in a browser.
+
+Most examples need to be run from a local server. I use [serve](https://github.com/vercel/serve#readme)
 
 Some examples that call external files require a local server to run
 
