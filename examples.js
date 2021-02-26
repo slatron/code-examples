@@ -104,6 +104,7 @@ const examples = {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
       document.getElementById('ui').appendChild(clearBtn)
+      hideCode()
     },
     execute: () => {
 

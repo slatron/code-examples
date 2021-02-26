@@ -41,6 +41,11 @@ const codeArea = document.querySelector('code pre')
 const arrowClasses = arrowIcon.classList
 const codeClasses = codeArea.classList
 
+const hideCode = () => {
+  arrowIcon.classList.remove('active')
+  codeClasses.add('hidden')
+}
+
 const toggleCode = () => {
   if (arrowClasses.value.includes('active')) {
     arrowIcon.classList.remove('active')
